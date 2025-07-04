@@ -34,7 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.latihanlksprovinsijawabarat2.data.model.Barang
+import com.example.smk_restaurant_review.data.model.Menu
 
 //
 //@Composable
@@ -171,11 +171,11 @@ import com.latihanlksprovinsijawabarat2.data.model.Barang
 
 @Composable
 fun ProductCard(
-    barang: Barang,
+    menu: Menu,
     onSelectedChange: (Int, Int) -> Unit,
     selectedItems: SnapshotStateMap<Int, Int>
 ) {
-    val quantity = selectedItems[barang.id] ?: 0
+    val quantity = selectedItems[menu.menuID] ?: 0
 
     Card(
         shape = RoundedCornerShape(12.dp),
@@ -190,20 +190,11 @@ fun ProductCard(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                AsyncImage(
-                    model = barang.urlGambar,
-                    contentDescription = barang.nama,
-                    modifier = Modifier.size(90.dp).clip(RoundedCornerShape(12.dp)),
-                    contentScale = ContentScale.Crop
-                )
-
-                Spacer(Modifier.width(12.dp))
-
                 Column(
                     modifier = Modifier.weight(1f)
                 ) {
                     Text(
-                        text = barang.nama,
+                        text = menu.name,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
                     )
@@ -211,45 +202,17 @@ fun ProductCard(
                     Spacer(Modifier.height(6.dp))
 
                     Text(
-                        text = "Rp. ${barang.harga}",
+                        text = "Rp. ${menu.price}",
                         fontSize = 14.sp,
                         fontWeight = FontWeight.SemiBold
                     )
 
                     Spacer(Modifier.height(4.dp))
 
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
 
-                    ) {
-                        Row {
-
-
-                        Icon(
-                            imageVector = Icons.Default.Star,
-                            contentDescription = "star",
-                            tint = Color.Yellow
-
-                        )
-
-                        Spacer(Modifier.width(4.dp))
-
-                        Text(
-                            text = barang.rating,
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    }
 
                         Spacer(Modifier.width(8.dp))
 
-                        Text(
-                            text = "Stok : " + barang.stok.toString(),
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 16.sp
-                        )
                     }
 
                 }
@@ -257,81 +220,38 @@ fun ProductCard(
 
             }
 
-            Spacer(Modifier.height(16.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically ,
-                horizontalArrangement = Arrangement.End
-            ) {
-                if (quantity > 0) {
-                    IconButton(
-                        onClick ={ onSelectedChange(barang.id, quantity -1)},
-                        modifier = Modifier.background(Color.Blue).size(36.dp),
-
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Remove,
-                            contentDescription = "kurang",
-                            tint = Color.White
-                        )
-                    }
-
-                    Spacer(Modifier.width(4.dp))
-
-                    Text(
-                        text = quantity.toString(),
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.SemiBold
-                    )
-
-                    Spacer(Modifier.width(8.dp))
-
-                }
-                IconButton(
-                    onClick ={ onSelectedChange(barang.id, quantity +1)},
-                    modifier = Modifier.background(Color.Blue).size(36.dp),
-                    enabled = quantity <= barang.stok
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = "tambah",
-                        tint = Color.White
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewProductCard() {
-    // Dummy data
-    val barang = Barang(
-        id = 1,
-        nama = "Kopi Susu Gula Aren",
-        harga = 18000,
-        rating = "4.8",
-        stok = 15,
-        urlGambar = "https://via.placeholder.com/150",
-        createdAt = "",
-        updatedAt = "" // Gambar dummy
-    )
-
-    // State dummy pakai remember
-    val selectedItems = remember {
-        mutableStateMapOf<Int, Int>().apply {
-            put(barang.id, 2) // Simulasi beli 2
         }
     }
 
-    // Fungsi kosong untuk preview
-    val onSelectedChange: (Int, Int) -> Unit = { _, _ -> }
-
-    ProductCard(
-        barang = barang,
-        selectedItems = selectedItems,
-        onSelectedChange = onSelectedChange
-    )
-}
+//
+//@Preview(showBackground = true)
+//@Composable
+//fun PreviewProductCard() {
+//    // Dummy data
+//    val barang = Barang(
+//        id = 1,
+//        nama = "Kopi Susu Gula Aren",
+//        harga = 18000,
+//        rating = "4.8",
+//        stok = 15,
+//        urlGambar = "https://via.placeholder.com/150",
+//        createdAt = "",
+//        updatedAt = "" // Gambar dummy
+//    )
+//
+//    // State dummy pakai remember
+//    val selectedItems = remember {
+//        mutableStateMapOf<Int, Int>().apply {
+//            put(barang.id, 2) // Simulasi beli 2
+//        }
+//    }
+//
+//    // Fungsi kosong untuk preview
+//    val onSelectedChange: (Int, Int) -> Unit = { _, _ -> }
+//
+//    ProductCard(
+//        barang = barang,
+//        selectedItems = selectedItems,
+//        onSelectedChange = onSelectedChange
+//    )
+//}

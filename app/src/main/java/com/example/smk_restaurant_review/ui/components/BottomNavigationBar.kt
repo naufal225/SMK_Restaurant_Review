@@ -16,12 +16,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.latihanlksprovinsijawabarat2.ui.navigation.Screen
+import com.example.smk_restaurant_review.ui.navigation.Screen
 
 @Composable
 fun BottomNavigationBar(navController: NavController) {
     val navigationItems = listOf(
-        Screen.Produk,
+        Screen.Menu,
         Screen.Profile
     )
 
@@ -39,14 +39,14 @@ fun BottomNavigationBar(navController: NavController) {
                 IconButton(
                     onClick = {
                         navController.navigate(it.route) {
-                            popUpTo(Screen.Produk.route) {inclusive = false}
+                            popUpTo(Screen.Menu.route) {inclusive = false}
                             launchSingleTop = true
                         }
                     }
                 ) {
                     Icon(
                         imageVector = when (it) {
-                            Screen.Produk -> Icons.Default.AddBox
+                            Screen.Menu -> Icons.Default.AddBox
                             Screen.Profile -> Icons.Default.Person
                             else -> Icons.Default.Help
                         },
