@@ -1,7 +1,10 @@
 package com.example.smk_restaurant_review.ui.scaffold
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -14,10 +17,13 @@ import com.example.smk_restaurant_review.ui.navigation.Screen
 import com.example.smk_restaurant_review.ui.viewmodels.AuthViewModel
 import com.example.smk_restaurant_review.ui.viewmodels.MenuViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppScaffold(navController: NavHostController, authViewModel: AuthViewModel, menuViewModel: MenuViewModel) {
     val listNavigation = listOf(
         Screen.Menu.route,
+        Screen.Profile.route,
+
     )
 
     val backStackEntry by navController.currentBackStackEntryAsState()
@@ -28,6 +34,21 @@ fun AppScaffold(navController: NavHostController, authViewModel: AuthViewModel, 
     }
 
     Scaffold(
+        topBar = {
+            if(currentRoute == Screen.Profile.route || currentRoute == Screen.Menu.route || currentRoute.toString().startsWith("menu")) {
+                TopAppBar(
+                    title = {
+                        when(currentRoute) {
+                            Screen.Menu.route -> Text("Menu")
+                            Screen.Profile.route -> Text("Profile")
+                            Screen.DetailMenu.route -> Text("Detail Menu")
+
+                        }
+                    }
+                )
+            }
+
+        },
         bottomBar = {
             if (showBottomNav) {
                 BottomNavigationBar(navController)

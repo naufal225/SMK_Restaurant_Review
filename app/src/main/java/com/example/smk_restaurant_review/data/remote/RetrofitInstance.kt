@@ -6,7 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitInstance {
-    const val BASE_URL = "http://10.0.2.2:8000/api/"
+    const val BASE_URL = "http://10.0.2.2:7045/api/"
 
     fun getRetrofit(context: Context) : Retrofit {
         val sharedPrefsManager = SharedPrefsManager(context)
@@ -29,5 +29,9 @@ object RetrofitInstance {
 
     fun getMenuInterface(context: Context) : IMenu {
         return getRetrofit(context).create(IMenu::class.java)
+    }
+
+    fun getReviewInterface(context: Context) : IReview {
+        return getRetrofit(context).create(IReview::class.java)
     }
 }

@@ -4,4 +4,6 @@ import com.example.smk_restaurant_review.data.remote.IMenu
 
 class MenuRepository(private val iMenu : IMenu) {
     suspend fun getAll() = iMenu.getAll()
+    suspend fun getById(id : Int) = iMenu.getById(id)
+
 }

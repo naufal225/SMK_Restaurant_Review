@@ -1,6 +1,7 @@
 package com.example.smk_restaurant_review.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,8 +34,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.smk_restaurant_review.data.model.Menu
+import com.example.smk_restaurant_review.ui.navigation.Screen
 
 //
 //@Composable
@@ -172,15 +175,18 @@ import com.example.smk_restaurant_review.data.model.Menu
 @Composable
 fun ProductCard(
     menu: Menu,
-    onSelectedChange: (Int, Int) -> Unit,
-    selectedItems: SnapshotStateMap<Int, Int>
+    navController: NavController
 ) {
-    val quantity = selectedItems[menu.menuID] ?: 0
 
     Card(
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(Color.White),
-        modifier = Modifier.fillMaxWidth().padding(6.dp),
+        modifier = Modifier.fillMaxWidth().padding(6.dp).clickable {
+            navController.navigate(Screen.DetailMenu.passId(menu.menuID)) {
+                popUpTo(Screen.Menu.route) {inclusive = false}
+                launchSingleTop = true
+            }
+        },
         elevation = CardDefaults.cardElevation(2.dp)
     ) {
         Column(
