@@ -17,18 +17,21 @@ import com.example.smk_restaurant_review.ui.scaffold.AppScaffold
 import com.example.smk_restaurant_review.ui.theme.SMK_Restaurant_ReviewTheme
 import com.example.smk_restaurant_review.ui.viewmodels.AuthViewModel
 import com.example.smk_restaurant_review.ui.viewmodels.MenuViewModel
+import com.example.smk_restaurant_review.ui.viewmodels.ReviewViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val authViewModel : AuthViewModel by viewModels()
         val menuViewModel : MenuViewModel by viewModels()
+        val reviewViewModel : ReviewViewModel by viewModels()
+
 
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             val navController = rememberNavController()
             SMK_Restaurant_ReviewTheme {
-                AppScaffold(navController, authViewModel, menuViewModel)
+                AppScaffold(navController, authViewModel, menuViewModel, reviewViewModel)
             }
         }
     }

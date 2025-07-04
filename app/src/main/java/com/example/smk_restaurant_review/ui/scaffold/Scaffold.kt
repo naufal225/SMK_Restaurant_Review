@@ -16,10 +16,11 @@ import com.example.smk_restaurant_review.ui.navigation.RootNavGraph
 import com.example.smk_restaurant_review.ui.navigation.Screen
 import com.example.smk_restaurant_review.ui.viewmodels.AuthViewModel
 import com.example.smk_restaurant_review.ui.viewmodels.MenuViewModel
+import com.example.smk_restaurant_review.ui.viewmodels.ReviewViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppScaffold(navController: NavHostController, authViewModel: AuthViewModel, menuViewModel: MenuViewModel) {
+fun AppScaffold(navController: NavHostController, authViewModel: AuthViewModel, menuViewModel: MenuViewModel, reviewViewModel: ReviewViewModel) {
     val listNavigation = listOf(
         Screen.Menu.route,
         Screen.Profile.route,
@@ -55,6 +56,6 @@ fun AppScaffold(navController: NavHostController, authViewModel: AuthViewModel, 
             }
         }
     ) { paddingValues ->
-        RootNavGraph(navController, authViewModel, menuViewModel, Modifier.padding(paddingValues))
+        RootNavGraph(navController, authViewModel, menuViewModel, reviewViewModel, Modifier.padding(paddingValues))
     }
 }

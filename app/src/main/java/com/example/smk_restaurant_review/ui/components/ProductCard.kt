@@ -181,7 +181,7 @@ fun ProductCard(
     Card(
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(Color.White),
-        modifier = Modifier.fillMaxWidth().padding(6.dp).clickable {
+        modifier = Modifier.fillMaxWidth().padding(12.dp).clickable {
             navController.navigate(Screen.DetailMenu.passId(menu.menuID)) {
                 popUpTo(Screen.Menu.route) {inclusive = false}
                 launchSingleTop = true

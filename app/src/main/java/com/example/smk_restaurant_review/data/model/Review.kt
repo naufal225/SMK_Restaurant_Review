@@ -23,5 +23,5 @@ data class Review(
     val photo: String,
 
     @SerializedName("createdAt")
-    val createdAt: Date
+    val createdAt: String
 )

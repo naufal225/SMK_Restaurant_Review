@@ -33,16 +33,19 @@ import androidx.navigation.NavController
 import com.example.smk_restaurant_review.data.model.ListMenu
 import com.example.smk_restaurant_review.data.remote.NetworkResponse
 import com.example.smk_restaurant_review.ui.components.ProductCard
+import com.example.smk_restaurant_review.ui.components.ReviewCard
 import com.example.smk_restaurant_review.ui.viewmodels.MenuViewModel
+import com.example.smk_restaurant_review.ui.viewmodels.ReviewViewModel
 
 @Composable
-fun DetailMenuScreen(id : Int, navController: NavController, menuViewModel: MenuViewModel, modifier: Modifier) {
+fun DetailMenuScreen(id : Int, navController: NavController, menuViewModel: MenuViewModel, reviewViewModel: ReviewViewModel, modifier: Modifier) {
     val menuById by menuViewModel.menuById.observeAsState()
 
-    val menuReviews
+    val menuReviews by reviewViewModel.reviewsByMenu.observeAsState()
 
     LaunchedEffect(Unit) {
         menuViewModel.GetById(id)
+        reviewViewModel.GetReviews(id)
     }
 
     Box(modifier = modifier.fillMaxSize()) {
@@ -78,7 +81,58 @@ fun DetailMenuScreen(id : Int, navController: NavController, menuViewModel: Menu
 
                     Spacer(Modifier.height(24.dp))
 
-
+                    when(val reviews = menuReviews) {
+                        is NetworkResponse.LOADING -> {
+                            Column(
+                                modifier = Modifier.fillMaxSize().padding(12.dp),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                CircularProgressIndicator()
+                            }
+                        }
+                        is NetworkResponse.SUCCESS -> {
+                            if(reviews.data.isEmpty()) {
+                                Text(
+                                    text = "Tidak ada review",
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight.Medium
+                                )
+                            }
+                            LazyColumn {
+                                items(reviews.data) {
+                                    ReviewCard(it)
+                                }
+                            }
+                        }
+                        is NetworkResponse.ERROR -> {
+                            Column(
+                                modifier = Modifier.fillMaxSize().padding(12.dp),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Text(
+                                    text = reviews.toString(),
+                                    fontSize = 14.sp,
+                                    color = Color.Red,
+                                    fontWeight = FontWeight.Medium
+                                )
+                            }
+                        }
+                        else -> {
+                            Column(
+                                modifier = Modifier.fillMaxSize().padding(12.dp),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Text(
+                                    text = "Tidak ada review",
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight.Medium
+                                )
+                            }
+                        }
+                    }
                 }
             }
 
