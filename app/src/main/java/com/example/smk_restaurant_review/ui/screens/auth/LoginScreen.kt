@@ -38,7 +38,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.smk_restaurant_review.data.model.LoginRequest
+import com.example.smk_restaurant_review.data.model.LoginResponse
 import com.example.smk_restaurant_review.data.remote.NetworkResponse
+import com.example.smk_restaurant_review.data.remote.SharedPrefsManager
 import com.example.smk_restaurant_review.ui.navigation.Screen
 import com.example.smk_restaurant_review.ui.viewmodels.AuthViewModel
 
@@ -65,6 +67,9 @@ fun LoginScreen(modifier: Modifier = Modifier, authViewModel: AuthViewModel, nav
 
             NetworkResponse.LOADING -> {}
             is NetworkResponse.SUCCESS -> {
+                val result = (loginResult as NetworkResponse.SUCCESS<LoginResponse>).data
+                val sharedPrefsManager = SharedPrefsManager(context)
+                sharedPrefsManager.saveToken(result.token)
                 authViewModel.login_result.postValue(null)
                 navController.navigate(Screen.Main.route) {
                     popUpTo(Screen.Login.route) { inclusive = true }

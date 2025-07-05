@@ -5,9 +5,12 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -36,13 +39,15 @@ fun AppScaffold(navController: NavHostController, authViewModel: AuthViewModel, 
 
     Scaffold(
         topBar = {
-            if(currentRoute == Screen.Profile.route || currentRoute == Screen.Menu.route || currentRoute.toString().startsWith("menu")) {
+            if(currentRoute == Screen.Profile.route || currentRoute == Screen.Menu.route || currentRoute.toString().startsWith("menu") || currentRoute.toString().startsWith("review")) {
                 TopAppBar(
+                    colors = TopAppBarDefaults.topAppBarColors(Color.White),
                     title = {
                         when(currentRoute) {
-                            Screen.Menu.route -> Text("Menu")
-                            Screen.Profile.route -> Text("Profile")
-                            Screen.DetailMenu.route -> Text("Detail Menu")
+                            Screen.Menu.route -> Text(Screen.Menu.title.toString(), fontWeight = FontWeight.Bold)
+                            Screen.Profile.route -> Text(Screen.Profile.title.toString(), fontWeight = FontWeight.Bold)
+                            Screen.DetailMenu.route -> Text(Screen.DetailMenu.title.toString(), fontWeight = FontWeight.Bold)
+                            Screen.ReviewMenu.route -> Text(Screen.ReviewMenu.title.toString(), fontWeight = FontWeight.Bold)
 
                         }
                     }

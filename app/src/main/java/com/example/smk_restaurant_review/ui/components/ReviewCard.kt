@@ -24,7 +24,16 @@ import androidx.navigation.NavController
 import com.example.smk_restaurant_review.data.model.Menu
 import com.example.smk_restaurant_review.data.model.Review
 import com.example.smk_restaurant_review.ui.navigation.Screen
+import java.text.SimpleDateFormat
+import java.util.Locale
 
+fun formatTanggalLegacy(isoDate: String): String {
+    val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+    val formatter = SimpleDateFormat("dd MMM yyyy HH:mm:ss", Locale("id", "ID"))
+
+    val date = parser.parse(isoDate)
+    return formatter.format(date)
+}
 
 @Composable
 fun ReviewCard(
@@ -54,12 +63,12 @@ fun ReviewCard(
                         Text(
                             text = review.reviewText,
                             maxLines = 2,
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Medium,
                         )
 
                         Text(
-                            text = review.createdAt.toString(),
+                            text = formatTanggalLegacy(review.createdAt),
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Medium
                         )

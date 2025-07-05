@@ -9,6 +9,7 @@ import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.example.smk_restaurant_review.ui.screens.main.DetailMenuScreen
 import com.example.smk_restaurant_review.ui.screens.main.MenuScreen
+import com.example.smk_restaurant_review.ui.screens.main.ReviewScreen
 import com.example.smk_restaurant_review.ui.viewmodels.MenuViewModel
 import com.example.smk_restaurant_review.ui.viewmodels.ReviewViewModel
 import com.google.gson.Gson
@@ -31,6 +32,11 @@ fun NavGraphBuilder.mainNavGraph(navController: NavController, menuViewModel: Me
         composable(Screen.DetailMenu.route, arguments = listOf(navArgument("id") {type = NavType.IntType})) { backStack ->
             val id = backStack?.arguments?.getInt("id") ?: 0
             DetailMenuScreen(id, navController, menuViewModel, reviewViewModel,modifier)
+        }
+
+        composable(Screen.ReviewMenu.route, arguments = listOf(navArgument("id") {type = NavType.IntType})) { backStack ->
+            val id = backStack?.arguments?.getInt("id") ?: 0
+            ReviewScreen(id, navController, reviewViewModel,modifier)
         }
 
     }

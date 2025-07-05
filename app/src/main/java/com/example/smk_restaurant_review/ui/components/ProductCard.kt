@@ -16,6 +16,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -37,6 +39,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.smk_restaurant_review.data.model.Menu
+import com.example.smk_restaurant_review.data.remote.RetrofitInstance
 import com.example.smk_restaurant_review.ui.navigation.Screen
 
 //
@@ -171,30 +174,44 @@ import com.example.smk_restaurant_review.ui.navigation.Screen
 //        }
 //    }
 //}
-
 @Composable
 fun ProductCard(
     menu: Menu,
     navController: NavController
 ) {
-
     Card(
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(Color.White),
-        modifier = Modifier.fillMaxWidth().padding(12.dp).clickable {
-            navController.navigate(Screen.DetailMenu.passId(menu.menuID)) {
-                popUpTo(Screen.Menu.route) {inclusive = false}
-                launchSingleTop = true
-            }
-        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(12.dp)
+            .clickable {
+                navController.navigate(Screen.DetailMenu.passId(menu.menuID)) {
+                    popUpTo(Screen.Menu.route) { inclusive = false }
+                    launchSingleTop = true
+                }
+            },
         elevation = CardDefaults.cardElevation(2.dp)
     ) {
-        Column(
-            modifier = Modifier.padding(8.dp)
-        ) {
+        Column(modifier = Modifier.padding(8.dp)) {
+
+            // Gambar produk
+            AsyncImage(
+                model = RetrofitInstance.BASE + menu.photoUrl,
+                contentDescription = "Product Image",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(160.dp)
+                    .clip(RoundedCornerShape(8.dp))
+            )
+
+            Spacer(Modifier.height(8.dp))
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Column(
                     modifier = Modifier.weight(1f)
@@ -212,22 +229,12 @@ fun ProductCard(
                         fontSize = 14.sp,
                         fontWeight = FontWeight.SemiBold
                     )
-
-                    Spacer(Modifier.height(4.dp))
-
-
-
-                        Spacer(Modifier.width(8.dp))
-
-                    }
-
                 }
-
-
             }
-
         }
     }
+}
+
 
 //
 //@Preview(showBackground = true)

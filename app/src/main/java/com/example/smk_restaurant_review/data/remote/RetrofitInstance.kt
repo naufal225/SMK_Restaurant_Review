@@ -7,6 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitInstance {
     const val BASE_URL = "http://10.0.2.2:7045/api/"
+    const val BASE = "http://10.0.2.2:7045/"
 
     fun getRetrofit(context: Context) : Retrofit {
         val sharedPrefsManager = SharedPrefsManager(context)
