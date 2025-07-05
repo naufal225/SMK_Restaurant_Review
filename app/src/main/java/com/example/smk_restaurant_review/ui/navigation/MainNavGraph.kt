@@ -29,6 +29,12 @@ fun NavGraphBuilder.mainNavGraph(navController: NavController, menuViewModel: Me
         composable(Screen.Profile.route) {
         }
 
+        composable(Screen.History.route) {
+        }
+
+        composable(Screen.Package.route) {
+        }
+
         composable(Screen.DetailMenu.route, arguments = listOf(navArgument("id") {type = NavType.IntType})) { backStack ->
             val id = backStack?.arguments?.getInt("id") ?: 0
             DetailMenuScreen(id, navController, menuViewModel, reviewViewModel,modifier)

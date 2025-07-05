@@ -24,22 +24,35 @@ import com.example.smk_restaurant_review.ui.viewmodels.ReviewViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppScaffold(navController: NavHostController, authViewModel: AuthViewModel, menuViewModel: MenuViewModel, reviewViewModel: ReviewViewModel) {
-    val listNavigation = listOf(
+    val TopAppBarNav = listOf(
         Screen.Menu.route,
         Screen.Profile.route,
+        Screen.Package.route,
+        Screen.History.route,
+        Screen.DetailMenu.route
+    )
 
+    val ButtomBarNav = listOf(
+        Screen.Menu.route,
+        Screen.Profile.route,
+        Screen.Package.route,
+        Screen.History.route,
     )
 
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route
 
-    val showBottomNav = listNavigation.any {
+    val showBottomBar = ButtomBarNav.any {
+        it == currentRoute
+    }
+
+    val showTopAppBar = TopAppBarNav.any {
         it == currentRoute
     }
 
     Scaffold(
         topBar = {
-            if(currentRoute == Screen.Profile.route || currentRoute == Screen.Menu.route || currentRoute.toString().startsWith("menu") || currentRoute.toString().startsWith("review")) {
+            if(showTopAppBar) {
                 TopAppBar(
                     colors = TopAppBarDefaults.topAppBarColors(Color.White),
                     title = {
@@ -48,6 +61,8 @@ fun AppScaffold(navController: NavHostController, authViewModel: AuthViewModel, 
                             Screen.Profile.route -> Text(Screen.Profile.title.toString(), fontWeight = FontWeight.Bold)
                             Screen.DetailMenu.route -> Text(Screen.DetailMenu.title.toString(), fontWeight = FontWeight.Bold)
                             Screen.ReviewMenu.route -> Text(Screen.ReviewMenu.title.toString(), fontWeight = FontWeight.Bold)
+                            Screen.History.route -> Text(Screen.History.title.toString(), fontWeight = FontWeight.Bold)
+                            Screen.Package.route -> Text(Screen.Package.title.toString(), fontWeight = FontWeight.Bold)
 
                         }
                     }
@@ -56,7 +71,7 @@ fun AppScaffold(navController: NavHostController, authViewModel: AuthViewModel, 
 
         },
         bottomBar = {
-            if (showBottomNav) {
+            if (showBottomBar) {
                 BottomNavigationBar(navController)
             }
         }

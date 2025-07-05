@@ -16,5 +16,9 @@ sealed class Screen(val route: String, val title: String? = null) {
         fun passId(id: Int) = "review/${id}"
     }
 
+    data object History : Screen("history", "History")
+
+    data object Package : Screen("package", "Package")
+
 
 }

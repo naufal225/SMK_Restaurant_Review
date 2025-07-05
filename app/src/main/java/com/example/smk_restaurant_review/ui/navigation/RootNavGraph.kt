@@ -18,7 +18,8 @@ fun RootNavGraph(navHostController: NavHostController, authViewModel: AuthViewMo
     val sharedPrefsManager = SharedPrefsManager(context)
     NavHost(
         navController = navHostController,
-        startDestination = if(sharedPrefsManager.getToken() != null) Screen.Main.route else Screen.Auth.route
+        startDestination = Screen.Auth.route
+//        startDestination = if(sharedPrefsManager.getToken() != null) Screen.Main.route else Screen.Auth.route
     ) {
         authNavGraph(navController = navHostController, authViewModel = authViewModel, modifier = modifier)
         mainNavGraph(navHostController, menuViewModel, reviewViewModel, modifier = modifier)
