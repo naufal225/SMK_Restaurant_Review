@@ -1,36 +1,25 @@
 package com.example.smk_restaurant_review.ui.components
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import com.example.smk_restaurant_review.data.model.Menu
 import com.example.smk_restaurant_review.data.model.Review
-import com.example.smk_restaurant_review.ui.navigation.Screen
 import java.text.SimpleDateFormat
-import java.util.Locale
+import java.util.*
 
 fun formatTanggalLegacy(isoDate: String): String {
     val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
-    val formatter = SimpleDateFormat("dd MMM yyyy HH:mm:ss", Locale("id", "ID"))
-
+    val formatter = SimpleDateFormat("dd MMM yyyy HH:mm", Locale("id", "ID"))
     val date = parser.parse(isoDate)
     return formatter.format(date)
 }
@@ -38,47 +27,70 @@ fun formatTanggalLegacy(isoDate: String): String {
 @Composable
 fun ReviewCard(
     review: Review,
+    onDeleteClick: (() -> Unit)? = null, // optional delete callback
 ) {
+    var expanded by remember { mutableStateOf(false) }
 
     Card(
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(Color.White),
-        modifier = Modifier.fillMaxWidth().padding(12.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(12.dp),
         elevation = CardDefaults.cardElevation(2.dp)
     ) {
-        Column(
-            modifier = Modifier.padding(8.dp)
-        ) {
+        Column(modifier = Modifier.padding(12.dp)) {
+
+            // Nama & menu titik tiga
             Row(
                 modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Column(
-                    modifier = Modifier.weight(1f),
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(
-                            text = review.reviewText,
-                            maxLines = 2,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Medium,
-                        )
+                Column {
+                    Text(
+                        text = review.reviewerName ?: "Anonim",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 16.sp
+                    )
 
-                        Text(
-                            text = formatTanggalLegacy(review.createdAt),
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.Medium
+                    Text(
+                        text = formatTanggalLegacy(review.createdAt),
+                        fontSize = 12.sp,
+                        color = Color.Gray
+                    )
+                }
+
+                Box {
+                    IconButton(onClick = { expanded = true }) {
+                        Icon(
+                            imageVector = Icons.Default.MoreVert,
+                            contentDescription = "Menu"
+                        )
+                    }
+
+                    DropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false }
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text("Hapus review") },
+                            onClick = {
+                                expanded = false
+                                onDeleteClick?.invoke()
+                            }
                         )
                     }
                 }
-
             }
 
+            Spacer(Modifier.height(12.dp))
 
+            Text(
+                text = review.reviewText,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Medium
+            )
         }
-
     }
 }
