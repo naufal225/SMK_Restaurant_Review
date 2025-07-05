@@ -1,5 +1,6 @@
 package com.example.smk_restaurant_review.ui.screens.main
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -49,9 +50,14 @@ fun DetailMenuScreen(id : Int, navController: NavController, menuViewModel: Menu
     val menuById by menuViewModel.menuById.observeAsState()
 
     val menuReviews by reviewViewModel.reviewsByMenu.observeAsState()
+    val deleteRes by reviewViewModel.reviewDeleteResponse.observeAsState()
 
     LaunchedEffect(Unit) {
         menuViewModel.GetById(id)
+        reviewViewModel.GetReviews(id)
+    }
+
+    LaunchedEffect(deleteRes) {
         reviewViewModel.GetReviews(id)
     }
 
@@ -144,8 +150,11 @@ fun DetailMenuScreen(id : Int, navController: NavController, menuViewModel: Menu
                                 )
                             }
                             LazyColumn {
-                                items(reviews.data) {
-                                    ReviewCard(it)
+                                items(reviews.data) { review ->
+                                    ReviewCard(review) {
+                                        reviewViewModel.DeleteReview(review.reviewID)
+                                        Log.d("DEBUG", review.reviewID.toString())
+                                    }
                                 }
                             }
                         }

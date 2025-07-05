@@ -13,4 +13,6 @@ class ReviewRepository(private val iReview: IReview) {
         reviewText = reviewCreateDto.reviewText,
         photo = reviewCreateDto.photo
     )
+
+    suspend fun deleteReview(id: Int) = iReview.deleteReview(id)
 }

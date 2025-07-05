@@ -19,9 +19,11 @@ class ReviewViewModel(private val application: Application) : BaseViewModel(appl
 
     private var _reviewsByMenu = MutableLiveData<NetworkResponse<List<Review>>>()
     private var _reviewPostResponse = MutableLiveData<NetworkResponse<Review>>()
+    private var _reviewDeleteResponse = MutableLiveData<NetworkResponse<Unit>>()
 
     val reviewsByMenu = _reviewsByMenu
     val reviewPostResponse = _reviewPostResponse
+    val reviewDeleteResponse = _reviewDeleteResponse
 
     fun GetReviews(id: Int) {
         executeApiCall(_reviewsByMenu) {
@@ -34,5 +36,12 @@ class ReviewViewModel(private val application: Application) : BaseViewModel(appl
             repos.postReview(reviewCreateDto)
         }
     }
+
+    fun DeleteReview(id : Int) {
+        executeApiCall(_reviewDeleteResponse) {
+            repos.deleteReview(id)
+        }
+    }
+
 
 }
