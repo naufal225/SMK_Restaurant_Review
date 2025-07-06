@@ -70,6 +70,8 @@ fun LoginScreen(modifier: Modifier = Modifier, authViewModel: AuthViewModel, nav
                 val result = (loginResult as NetworkResponse.SUCCESS<LoginResponse>).data
                 val sharedPrefsManager = SharedPrefsManager(context)
                 sharedPrefsManager.saveToken(result.token)
+                sharedPrefsManager.saveEmail(result.user.email)
+                sharedPrefsManager.saveName(result.user.name)
                 authViewModel.login_result.postValue(null)
                 navController.navigate(Screen.Main.route) {
                     popUpTo(Screen.Login.route) { inclusive = true }

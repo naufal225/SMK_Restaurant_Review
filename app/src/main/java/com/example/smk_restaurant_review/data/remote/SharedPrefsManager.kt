@@ -12,4 +12,24 @@ class SharedPrefsManager(context: Context) {
     fun getToken() : String? {
         return sharedPreferences.getString("TOKEN", null)
     }
+
+    fun saveName(name: String) {
+        sharedPreferences.edit().putString("NAME", name).apply()
+    }
+
+    fun getName() : String? {
+        return sharedPreferences.getString("NAME", null)
+    }
+
+    fun saveEmail(email: String) {
+        sharedPreferences.edit().putString("EMAIL", email).apply()
+    }
+
+    fun getEmail() : String? {
+        return sharedPreferences.getString("EMAIL", null)
+    }
+
+    fun clear()  {
+        return sharedPreferences.edit().clear().apply()
+    }
 }

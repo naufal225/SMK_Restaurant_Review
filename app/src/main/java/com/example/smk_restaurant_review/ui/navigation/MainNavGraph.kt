@@ -9,6 +9,7 @@ import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.example.smk_restaurant_review.ui.screens.main.DetailMenuScreen
 import com.example.smk_restaurant_review.ui.screens.main.MenuScreen
+import com.example.smk_restaurant_review.ui.screens.main.ProfileScreen
 import com.example.smk_restaurant_review.ui.screens.main.ReviewScreen
 import com.example.smk_restaurant_review.ui.viewmodels.MenuViewModel
 import com.example.smk_restaurant_review.ui.viewmodels.ReviewViewModel
@@ -27,6 +28,7 @@ fun NavGraphBuilder.mainNavGraph(navController: NavController, menuViewModel: Me
         }
 
         composable(Screen.Profile.route) {
+            ProfileScreen(navController, modifier)
         }
 
         composable(Screen.History.route) {
