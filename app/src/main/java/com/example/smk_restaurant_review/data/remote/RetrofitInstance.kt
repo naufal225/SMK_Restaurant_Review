@@ -39,4 +39,8 @@ object RetrofitInstance {
     fun getOrdersInterface(context: Context) : IOrder {
         return getRetrofit(context).create(IOrder::class.java)
     }
+
+    fun getPackagesInterface(context: Context) : IPackage {
+        return getRetrofit(context).create(IPackage::class.java)
+    }
 }

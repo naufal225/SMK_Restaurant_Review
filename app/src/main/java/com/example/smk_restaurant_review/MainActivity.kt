@@ -18,6 +18,7 @@ import com.example.smk_restaurant_review.ui.theme.SMK_Restaurant_ReviewTheme
 import com.example.smk_restaurant_review.ui.viewmodels.AuthViewModel
 import com.example.smk_restaurant_review.ui.viewmodels.MenuViewModel
 import com.example.smk_restaurant_review.ui.viewmodels.OrderViewModel
+import com.example.smk_restaurant_review.ui.viewmodels.PackageViewModel
 import com.example.smk_restaurant_review.ui.viewmodels.ReviewViewModel
 
 class MainActivity : ComponentActivity() {
@@ -26,13 +27,15 @@ class MainActivity : ComponentActivity() {
         val menuViewModel : MenuViewModel by viewModels()
         val reviewViewModel : ReviewViewModel by viewModels()
         val orderViewModel : OrderViewModel by viewModels()
+        val packageViewModel : PackageViewModel by viewModels()
+
 
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             val navController = rememberNavController()
             SMK_Restaurant_ReviewTheme {
-                AppScaffold(navController, authViewModel, menuViewModel, reviewViewModel, orderViewModel)
+                AppScaffold(navController, authViewModel, menuViewModel, reviewViewModel, orderViewModel, packageViewModel)
             }
         }
     }

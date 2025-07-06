@@ -25,11 +25,12 @@ import com.example.smk_restaurant_review.ui.navigation.Screen
 import com.example.smk_restaurant_review.ui.viewmodels.AuthViewModel
 import com.example.smk_restaurant_review.ui.viewmodels.MenuViewModel
 import com.example.smk_restaurant_review.ui.viewmodels.OrderViewModel
+import com.example.smk_restaurant_review.ui.viewmodels.PackageViewModel
 import com.example.smk_restaurant_review.ui.viewmodels.ReviewViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppScaffold(navController: NavHostController, authViewModel: AuthViewModel, menuViewModel: MenuViewModel, reviewViewModel: ReviewViewModel, orderViewModel: OrderViewModel) {
+fun AppScaffold(navController: NavHostController, authViewModel: AuthViewModel, menuViewModel: MenuViewModel, reviewViewModel: ReviewViewModel, orderViewModel: OrderViewModel, packageViewModel: PackageViewModel) {
     val TopAppBarNav = listOf(
         Screen.Menu.route,
         Screen.Profile.route,
@@ -61,7 +62,11 @@ fun AppScaffold(navController: NavHostController, authViewModel: AuthViewModel, 
             if(showTopAppBar) {
                 TopAppBar(
                     navigationIcon = {
-                        if(currentRoute == Screen.DetailMenu.route || currentRoute.toString().startsWith(Screen.HistoryDetail.route)) {
+                        val isHistoryDetail = currentRoute?.startsWith("historyDetail/") == true
+                        val isDetailMenu = currentRoute == Screen.DetailMenu.route
+
+                        if (isDetailMenu || isHistoryDetail) {
+
                             IconButton(
                                 onClick = { navController.popBackStack() }
                             ) {
@@ -94,6 +99,6 @@ fun AppScaffold(navController: NavHostController, authViewModel: AuthViewModel, 
             }
         }
     ) { paddingValues ->
-        RootNavGraph(navController, authViewModel, menuViewModel, reviewViewModel, orderViewModel, Modifier.padding(paddingValues))
+        RootNavGraph(navController, authViewModel, menuViewModel, reviewViewModel, orderViewModel, packageViewModel, Modifier.padding(paddingValues))
     }
 }

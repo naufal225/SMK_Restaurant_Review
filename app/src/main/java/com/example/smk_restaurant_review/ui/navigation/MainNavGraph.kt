@@ -8,21 +8,25 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.example.smk_restaurant_review.data.model.OrderHistoryItem
+import com.example.smk_restaurant_review.data.model.Package
 import com.example.smk_restaurant_review.ui.screens.main.DetailMenuScreen
 import com.example.smk_restaurant_review.ui.screens.main.MenuScreen
 import com.example.smk_restaurant_review.ui.screens.main.OrderDetailScreen
 import com.example.smk_restaurant_review.ui.screens.main.OrderHistoryScreen
+import com.example.smk_restaurant_review.ui.screens.main.PackageDetailScreen
+import com.example.smk_restaurant_review.ui.screens.main.PackagesScreen
 import com.example.smk_restaurant_review.ui.screens.main.ProfileScreen
 import com.example.smk_restaurant_review.ui.screens.main.ReviewScreen
 import com.example.smk_restaurant_review.ui.viewmodels.MenuViewModel
 import com.example.smk_restaurant_review.ui.viewmodels.OrderViewModel
+import com.example.smk_restaurant_review.ui.viewmodels.PackageViewModel
 import com.example.smk_restaurant_review.ui.viewmodels.ReviewViewModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.net.URLDecoder
 import java.nio.charset.StandardCharsets
 
-fun NavGraphBuilder.mainNavGraph(navController: NavController, menuViewModel: MenuViewModel, reviewViewModel: ReviewViewModel, orderViewModel: OrderViewModel, modifier: Modifier = Modifier) {
+fun NavGraphBuilder.mainNavGraph(navController: NavController, menuViewModel: MenuViewModel, reviewViewModel: ReviewViewModel, orderViewModel: OrderViewModel, packageViewModel: PackageViewModel, modifier: Modifier = Modifier) {
     navigation(
         startDestination = Screen.Menu.route,
         route = Screen.Main.route
@@ -47,6 +51,14 @@ fun NavGraphBuilder.mainNavGraph(navController: NavController, menuViewModel: Me
         }
 
         composable(Screen.Package.route) {
+            PackagesScreen(navController, packageViewModel, modifier)
+        }
+
+        composable(Screen.PackageDetail.route, listOf(navArgument("data") {type = NavType.StringType})) { backStackEntry ->
+            val json = backStackEntry.arguments?.getString("data")
+            val packages = Gson().fromJson(json, Package::class.java)
+
+            PackageDetailScreen(packages, packageViewModel, navController, modifier)
         }
 
         composable(Screen.DetailMenu.route, arguments = listOf(navArgument("id") {type = NavType.IntType})) { backStack ->
