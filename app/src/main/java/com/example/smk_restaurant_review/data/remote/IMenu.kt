@@ -8,9 +8,9 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface IMenu {
-    @GET("menu")
+    @GET("menus")
     suspend fun getAll() : Response<ListMenu>
 
-    @GET("menu/{id}")
+    @GET("menus/{id}")
     suspend fun getById(@Path("id") id: Int) : Response<Menu>
 }

@@ -24,11 +24,12 @@ import com.example.smk_restaurant_review.ui.navigation.RootNavGraph
 import com.example.smk_restaurant_review.ui.navigation.Screen
 import com.example.smk_restaurant_review.ui.viewmodels.AuthViewModel
 import com.example.smk_restaurant_review.ui.viewmodels.MenuViewModel
+import com.example.smk_restaurant_review.ui.viewmodels.OrderViewModel
 import com.example.smk_restaurant_review.ui.viewmodels.ReviewViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppScaffold(navController: NavHostController, authViewModel: AuthViewModel, menuViewModel: MenuViewModel, reviewViewModel: ReviewViewModel) {
+fun AppScaffold(navController: NavHostController, authViewModel: AuthViewModel, menuViewModel: MenuViewModel, reviewViewModel: ReviewViewModel, orderViewModel: OrderViewModel) {
     val TopAppBarNav = listOf(
         Screen.Menu.route,
         Screen.Profile.route,
@@ -60,7 +61,7 @@ fun AppScaffold(navController: NavHostController, authViewModel: AuthViewModel, 
             if(showTopAppBar) {
                 TopAppBar(
                     navigationIcon = {
-                        if(currentRoute == Screen.DetailMenu.route) {
+                        if(currentRoute == Screen.DetailMenu.route || currentRoute.toString().startsWith(Screen.HistoryDetail.route)) {
                             IconButton(
                                 onClick = { navController.popBackStack() }
                             ) {
@@ -93,6 +94,6 @@ fun AppScaffold(navController: NavHostController, authViewModel: AuthViewModel, 
             }
         }
     ) { paddingValues ->
-        RootNavGraph(navController, authViewModel, menuViewModel, reviewViewModel, Modifier.padding(paddingValues))
+        RootNavGraph(navController, authViewModel, menuViewModel, reviewViewModel, orderViewModel, Modifier.padding(paddingValues))
     }
 }

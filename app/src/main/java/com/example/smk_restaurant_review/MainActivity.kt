@@ -17,6 +17,7 @@ import com.example.smk_restaurant_review.ui.scaffold.AppScaffold
 import com.example.smk_restaurant_review.ui.theme.SMK_Restaurant_ReviewTheme
 import com.example.smk_restaurant_review.ui.viewmodels.AuthViewModel
 import com.example.smk_restaurant_review.ui.viewmodels.MenuViewModel
+import com.example.smk_restaurant_review.ui.viewmodels.OrderViewModel
 import com.example.smk_restaurant_review.ui.viewmodels.ReviewViewModel
 
 class MainActivity : ComponentActivity() {
@@ -24,31 +25,15 @@ class MainActivity : ComponentActivity() {
         val authViewModel : AuthViewModel by viewModels()
         val menuViewModel : MenuViewModel by viewModels()
         val reviewViewModel : ReviewViewModel by viewModels()
-
+        val orderViewModel : OrderViewModel by viewModels()
 
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             val navController = rememberNavController()
             SMK_Restaurant_ReviewTheme {
-                AppScaffold(navController, authViewModel, menuViewModel, reviewViewModel)
+                AppScaffold(navController, authViewModel, menuViewModel, reviewViewModel, orderViewModel)
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    SMK_Restaurant_ReviewTheme {
-        Greeting("Android")
     }
 }

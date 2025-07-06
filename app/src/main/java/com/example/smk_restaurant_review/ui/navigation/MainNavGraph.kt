@@ -7,18 +7,22 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.example.smk_restaurant_review.data.model.OrderHistoryItem
 import com.example.smk_restaurant_review.ui.screens.main.DetailMenuScreen
 import com.example.smk_restaurant_review.ui.screens.main.MenuScreen
+import com.example.smk_restaurant_review.ui.screens.main.OrderDetailScreen
+import com.example.smk_restaurant_review.ui.screens.main.OrderHistoryScreen
 import com.example.smk_restaurant_review.ui.screens.main.ProfileScreen
 import com.example.smk_restaurant_review.ui.screens.main.ReviewScreen
 import com.example.smk_restaurant_review.ui.viewmodels.MenuViewModel
+import com.example.smk_restaurant_review.ui.viewmodels.OrderViewModel
 import com.example.smk_restaurant_review.ui.viewmodels.ReviewViewModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.net.URLDecoder
 import java.nio.charset.StandardCharsets
 
-fun NavGraphBuilder.mainNavGraph(navController: NavController, menuViewModel: MenuViewModel, reviewViewModel: ReviewViewModel, modifier: Modifier = Modifier) {
+fun NavGraphBuilder.mainNavGraph(navController: NavController, menuViewModel: MenuViewModel, reviewViewModel: ReviewViewModel, orderViewModel: OrderViewModel, modifier: Modifier = Modifier) {
     navigation(
         startDestination = Screen.Menu.route,
         route = Screen.Main.route
@@ -32,6 +36,14 @@ fun NavGraphBuilder.mainNavGraph(navController: NavController, menuViewModel: Me
         }
 
         composable(Screen.History.route) {
+            OrderHistoryScreen(navController, orderViewModel, modifier)
+        }
+
+        composable(Screen.HistoryDetail.route, listOf(navArgument("data") {type = NavType.StringType})) { backStackEntry ->
+            val json = backStackEntry.arguments?.getString("data")
+            val order = Gson().fromJson(json, OrderHistoryItem::class.java)
+
+            OrderDetailScreen(order, navController, modifier)
         }
 
         composable(Screen.Package.route) {

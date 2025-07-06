@@ -18,6 +18,10 @@ sealed class Screen(val route: String, val title: String? = null) {
 
     data object History : Screen("history", "History")
 
+    data object HistoryDetail : Screen("historyDetail/{data}", "Order History Detail") {
+        fun passData(data: String) = "historyDetail/${data}"
+    }
+
     data object Package : Screen("package", "Package")
 
 

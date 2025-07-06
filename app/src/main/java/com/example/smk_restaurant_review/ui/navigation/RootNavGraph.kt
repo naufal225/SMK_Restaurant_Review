@@ -8,11 +8,12 @@ import androidx.navigation.compose.NavHost
 import com.example.smk_restaurant_review.data.remote.SharedPrefsManager
 import com.example.smk_restaurant_review.ui.viewmodels.AuthViewModel
 import com.example.smk_restaurant_review.ui.viewmodels.MenuViewModel
+import com.example.smk_restaurant_review.ui.viewmodels.OrderViewModel
 import com.example.smk_restaurant_review.ui.viewmodels.ReviewViewModel
 
 
 @Composable
-fun RootNavGraph(navHostController: NavHostController, authViewModel: AuthViewModel, menuViewModel: MenuViewModel, reviewViewModel: ReviewViewModel, modifier: Modifier) {
+fun RootNavGraph(navHostController: NavHostController, authViewModel: AuthViewModel, menuViewModel: MenuViewModel, reviewViewModel: ReviewViewModel, orderViewModel: OrderViewModel, modifier: Modifier) {
     val context = LocalContext.current
 
     val sharedPrefsManager = SharedPrefsManager(context)
@@ -22,6 +23,6 @@ fun RootNavGraph(navHostController: NavHostController, authViewModel: AuthViewMo
 //        startDestination = if(sharedPrefsManager.getToken() != null) Screen.Main.route else Screen.Auth.route
     ) {
         authNavGraph(navController = navHostController, authViewModel = authViewModel, modifier = modifier)
-        mainNavGraph(navHostController, menuViewModel, reviewViewModel, modifier = modifier)
+        mainNavGraph(navHostController, menuViewModel, reviewViewModel, orderViewModel, modifier = modifier)
     }
 }

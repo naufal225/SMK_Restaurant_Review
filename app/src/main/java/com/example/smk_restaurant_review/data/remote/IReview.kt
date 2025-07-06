@@ -12,7 +12,7 @@ import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface IReview {
-    @GET("review/menu/{id}")
+    @GET("reviews/menu/{id}")
     suspend fun getReviewById(@Path("id") id : Int) : Response<List<Review>>
 
     @Multipart
@@ -24,7 +24,7 @@ interface IReview {
         @Part photo: MultipartBody.Part? = null
     ): Response<Review>
 
-    @DELETE("review/{id}")
+    @DELETE("reviews/{id}")
     suspend fun deleteReview(@Path("id") id : Int) : Response<Unit>
 
 }

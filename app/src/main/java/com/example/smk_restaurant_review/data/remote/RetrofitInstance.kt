@@ -35,4 +35,8 @@ object RetrofitInstance {
     fun getReviewInterface(context: Context) : IReview {
         return getRetrofit(context).create(IReview::class.java)
     }
+
+    fun getOrdersInterface(context: Context) : IOrder {
+        return getRetrofit(context).create(IOrder::class.java)
+    }
 }
