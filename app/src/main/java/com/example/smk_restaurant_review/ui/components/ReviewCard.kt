@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.StarBorder
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -59,6 +61,8 @@ fun ReviewCard(
                         fontSize = 12.sp,
                         color = Color.Gray
                     )
+
+                    StarRatingBarNoChange(rating = review.rating)
                 }
 
                 Box {
@@ -90,6 +94,26 @@ fun ReviewCard(
                 text = review.reviewText,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium
+            )
+        }
+    }
+}
+
+
+@Composable
+fun StarRatingBarNoChange(
+    rating: Int,
+    modifier: Modifier = Modifier
+) {
+    Row(modifier = modifier) {
+        for (i in 1..5) {
+            Icon(
+                imageVector = if (i <= rating) Icons.Filled.Star else Icons.Outlined.StarBorder,
+                contentDescription = "Star $i",
+                tint = Color(0xFFFFD700), // Gold
+                modifier = Modifier
+                    .size(24.dp)
+                    .padding(4.dp)
             )
         }
     }

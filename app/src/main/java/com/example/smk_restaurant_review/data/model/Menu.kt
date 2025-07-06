@@ -13,5 +13,11 @@ data class Menu(
     @SerializedName("photoUrl")
     val photoUrl: String,
     @SerializedName("price")
-    val price: Int
+    val price: Int,
+    @SerializedName("rating")
+    val rating: Float,
+    @SerializedName("isReviewed")
+    val isReviewed: Boolean,
+    @SerializedName("isOrdered")
+    val isOrdered: Boolean,
 )

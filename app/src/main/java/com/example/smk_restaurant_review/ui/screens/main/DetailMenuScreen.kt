@@ -10,11 +10,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -58,6 +60,8 @@ fun DetailMenuScreen(id : Int, navController: NavController, menuViewModel: Menu
     }
 
     LaunchedEffect(deleteRes) {
+        menuViewModel.GetById(id)
+
         reviewViewModel.GetReviews(id)
     }
 
@@ -108,22 +112,49 @@ fun DetailMenuScreen(id : Int, navController: NavController, menuViewModel: Menu
                                         fontSize = 12.sp
                                     )
                                 }
-                                Button(
-                                    onClick = {
-                                        navController.navigate(Screen.ReviewMenu.passId(id)) {
-                                            popUpTo(Screen.DetailMenu.passId(id)) {inclusive = false}
-                                            launchSingleTop = true
-                                        }
-                                    },
-                                    modifier = Modifier.padding(12.dp)
+
+                                Column(
+                                    verticalArrangement = Arrangement.spacedBy(12.dp)
                                 ) {
-                                    Text(
-                                        text = "Review",
-                                        color = Color.White,
-                                        fontSize = 12.sp,
-                                        fontWeight = FontWeight.Medium
-                                    )
+                                    Row(
+                                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Default.Star,
+                                            contentDescription = "",
+                                            tint = Color.Yellow,
+                                            modifier = Modifier.size(32.dp)
+                                        )
+
+                                        Text(
+                                            text = "${result.data.rating}",
+                                            fontSize = 14.sp,
+                                            fontWeight = FontWeight.SemiBold
+                                        )
+                                    }
+
+                                    if(result.data.isOrdered && !result.data.isReviewed) {
+                                        Button(
+                                            onClick = {
+                                                navController.navigate(Screen.ReviewMenu.passId(id)) {
+                                                    popUpTo(Screen.DetailMenu.passId(id)) {inclusive = false}
+                                                    launchSingleTop = true
+                                                }
+                                            },
+                                            modifier = Modifier.padding(12.dp)
+                                        ) {
+                                            Text(
+                                                text = "Review",
+                                                color = Color.White,
+                                                fontSize = 12.sp,
+                                                fontWeight = FontWeight.Medium
+                                            )
+                                        }
+                                    }
+
                                 }
+
                             }
 
                         }

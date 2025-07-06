@@ -230,6 +230,23 @@ fun ProductCard(
                         fontWeight = FontWeight.SemiBold
                     )
                 }
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Star,
+                        contentDescription = "",
+                        tint = Color.Yellow,
+                        modifier = Modifier.size(32.dp)
+                    )
+
+                    Text(
+                        text = "${menu.rating}",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
             }
         }
     }
